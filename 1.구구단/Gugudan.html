@@ -1,0 +1,50 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>gugugugugu</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div>{{first}} X {{second}} = ?</div>
+    <form v-on:submit="onSubmitForm">
+        <input type="number" ref="answer" v-model="value">
+        <button type="submit">입력</button>
+        <!-- <div>{{value}}</div> -->
+    </form>
+    <div id="result">{{result}}</div>
+</div>
+<script>
+  const app = new Vue({
+    el: '#root',
+    data: {
+        first: Math.ceil(Math.random() * 9),
+        second: Math.ceil(Math.random() * 9),
+        value: '',
+        result: '',
+    },
+    methods: {
+        onSubmitForm(e){
+            //e.preventDefault(); // preventDefault() :: 창이 새로고침되는걸 막아줌
+            if(this.first * this.second === parseInt(this.value)) {
+                console.log('##### if >>> ');
+                this.result = '정답';
+                this.first = Math.ceil(Math.random() * 9);
+                this.second = Math.ceil(Math.random() * 9);
+                this.value = '';
+                this.$refs.answer.focus(); // $refs :: 
+            }else {
+                console.log('##### else >>> ');
+                this.result = '틀림';
+                this.value = '';
+                this.$refs.answer.focus();
+            }
+        },
+    },
+  });
+</script>
+</body>
+</html>
