@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    // 4자리 랜덤숫자 뽑기
+    // 4자리 랜덤숫자 뽑기 -
     /*  methods: {
             getNumbers: () => { ~~ }
         } => 메소드로도 사용 가능 :: 사용할 땐, this.getNumbers()
