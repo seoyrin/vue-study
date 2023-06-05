@@ -2,9 +2,11 @@
     <div>
         <div id="screen" :class="state" @click="onClickScreen">{{message}}</div>
         <!--v-bind:class 와  :class 는 같은 표현-->
-        <div>
-            <div>평균 시간: {{result.reduce((a, c) => a + c, 0) / result.length || 0}}ms</div>
+        <div v-if="result.length">
+        <!--v-show와 v-if의 차이? : -->
+            <div>평균 시간: {{average}}ms</div>
             <!--result.reduce((a, c) => a + c, 0) :: 배열의 값을 다 더하기--><!--|| 0 :: 기본값을 0으로 지정-->
+            <!--계산식은 여기부분보다는 computed 속성 안에서 해줘야 함(*데이터의 가공이 필요한 경우엔 computed 적용*)-->
             <button @click="onReset">리셋</button>
             <!--v-on:click 와 @click 는 같은 표현-->
         </div>
@@ -17,12 +19,22 @@
     let timeout = null; 
     // startTime, endTime, timeout 을 data() 안에 안넣는 이유? -> 화면이랑 관련이 없기 때문(즉, 화면이랑 관련이 있는 것만 data()안에 넣는다.)
     export default { 
+        /*
+            data와 computed의 차이점
+            ->data : 간단한 데이터
+            ->computed : 일반데이터를 가공해서 쓸 때 사용
+        */
         data() {
             return {
                 result: [],
                 state: 'waiting',
                 message: '클릭해서 시작하세요.',
             };
+        },
+        computed: {
+            average() {
+                return this.result.reduce((a, c) => a + c, 0) / this.result.length || 0;
+            }
         },
         methods: {
             onReset() {
