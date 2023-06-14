@@ -109,7 +109,7 @@
                 (이유? 메모리 누수를 막기 위해서)
             */
         },
-        destroyed() { // 컴포넌트가 화면에 있었다가 사라질 때 실행(ex:<lifecycle-example v-if-:"fase">가 되어서 사라질 때..)
+        destroyed() { // 컴포넌트가 화면에 있었다가 사라질 때 실행(ex:<lifecycle-example v-if:"false">가 되어서 사라질 때..)
             console.log('destroyed');
         },
     };
