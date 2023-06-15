@@ -85,9 +85,21 @@
             */
         },
         
+        // watch : 어떤 값이 바뀌었는지 감시하는 기능, watch를 사용하는건 지양(부작용이 있을 수 있다.)
+        /* 
         watch: {
-           
+           bonus(value, oldValue) { // bonus 데이터가 바뀔 때마다 실행된다.
+                console.log('value : ' + value + ' :: oldValue : ' + oldValue);
+                if(value === null) {
+                    this.showBalls();
+                }
+           }
         },
+        */
+        /*
+            computed : 새로운 값을 return
+            watch : 특정 동작을 수행
+        */
     };
 </script>
 
