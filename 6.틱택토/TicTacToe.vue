@@ -1,8 +1,9 @@
 <template>
     <div>
+        <div>{{ turn }}님의 턴입니다.</div>
         <table-component :table-data="tableData"/>
         <!-- v-bind:table-data와 :table-data는 같은표현 -->
-        <div>{{ turn }}님의 턴입니다.</div>
+        <div v-if="winner">{{ winner }}님의 승리!</div>
     </div>
 </template>
 
@@ -20,6 +21,7 @@
                     ['','',''],
                 ],
                 turn: 'O',
+                winner: '',
             };
         },
         methods: {

@@ -11,6 +11,8 @@
         },
         methods: {
             onClickTd() {
+                if(this.cellData) return; // 이미 눌러진 칸을 다시 눌렀을 때 처리
+
                 const rootData = this.$root.$data;
                 console.log('### root데이터 >>> ',  rootData);
                 /*
@@ -27,13 +29,51 @@
                 // this.$set 사용
                 this.$set(rootData.tableData[this.rowIndex], this.cellIndex, rootData.turn);
 
+                // 빙고가 됐는지 확인
+                let win = false;
+                if (rootData.tableData[this.rowIndex][0] === rootData.turn && rootData.tableData[this.rowIndex][1] === rootData.turn && rootData.tableData[this.rowIndex][2] === rootData.turn) {
+                win = true;
+                }
+                if (rootData.tableData[0][this.cellIndex] === rootData.turn && rootData.tableData[1][this.cellIndex] === rootData.turn && rootData.tableData[2][this.cellIndex] === rootData.turn) {
+                win = true;
+                }
+                if (rootData.tableData[0][0] === rootData.turn && rootData.tableData[1][1] === rootData.turn && rootData.tableData[2][2] === rootData.turn) {
+                win = true;
+                }
+                if (rootData.tableData[0][2] === rootData.turn && rootData.tableData[1][1] === rootData.turn && rootData.tableData[2][0] === rootData.turn) {
+                win = true;
+                }
+
+                // 승자 확인 
+                if(win) { // 이긴 경우: 3줄 달성
+                    rootData.winner = rootData.turn; // 승자 기록
+                    // 데이터 초기화
+                    rootData.turn = 'O';
+                    rootData.tableData = [['','',''], ['','',''], ['','','']];
+                }else { // 무승부
+                    let all = true; // all이 true면 무승부라는 뜻
+                    rootData.tableData.forEach((row) => { // 무승부 검사
+                        console.log('row >>> ', row);
+                        //console.log('index >>> ', index);
+                        //console.log('array >>> ', array);
+                        row.forEach((cell) => {
+                        if (!cell) {
+                            all = false;
+                        }
+                        });
+                    });
+                    if(all) { // 무승부
+                        rootData.turn = 'O';
+                        rootData.winner = '';
+                        rootData.tableData = [['','',''], ['','',''], ['','','']];
+                    }else { // 게임이 안끝난 경우
+                        rootData.turn = rootData.turn === 'O' ? 'X' : 'O'; // 최상위 컴포넌트 data 바꿔주기 가능
+                    }
+                }
+
                 //console.log('### root데이터 >>> ', this.$root.$data); // 최상위 컴포넌트의 data
                 //console.log('### parent데이터 >>> ', this.$parent.$data); // 현재 컴포넌트 기준, 부모 컴포넌트의 data
-                rootData.turn = rootData.turn === 'O' ? 'X' : 'O'; // 최상위 컴포넌트 data 바꿔주기 가능
 
-                
-                
-                
             }
         }
     };
